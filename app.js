@@ -210,11 +210,12 @@ client.connect()
       });
     });
 
-    function isLoggedIn (req, res, next) {
-      if (req.user) {
-        next() }
-        else {
-          res.redirect("/login.ejs") //re-direct to login page if false 
+    function isLoggedIn(req, res, next) {
+      if (userProfile !== undefined) {
+        next()
+      }
+      else {
+        res.redirect("/login.ejs") //re-direct to login page if false 
+      }
     }
-  }
-})
+  })
