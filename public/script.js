@@ -6,18 +6,17 @@ const PROFILE_URL = `${HEROKU_API_ROOT_URL}/userprofile`;
 
 
 // GET/READ
-fetch(PROFILE_URL)
-  .then(res => {
-    console.log(res);
-    res.json();
-  })
-  // .then(gifts => {
-  //    renderGifts(gifts);
-  //  })
-  .catch(error => {
-    console.log(error);
-  })
-
+// fetch(PROFILE_URL)
+//   .then(res => {
+//     console.log(res);
+//     res.json();
+//   })
+//   // .then(gifts => {
+//   //    renderGifts(gifts);
+//   //  })
+//   .catch(error => {
+//     console.log(error);
+//   })
 
 // POST/CREATE
 document.getElementById('gift-form').addEventListener('submit', eventObj => {
@@ -31,7 +30,7 @@ document.getElementById('gift-form').addEventListener('submit', eventObj => {
   if (date === undefined || date.length === 0){
     date = ''; 
   }
-
+  
   const giftEntry = { giftName, recipient, link, date }
   
   fetch(PROFILE_URL, {
@@ -41,10 +40,16 @@ document.getElementById('gift-form').addEventListener('submit', eventObj => {
     },
     body: JSON.stringify(giftEntry)
   })
-  .then(res => res.json())
-  .then(data => renderGifts(data))
+  .then(res => {
+    console.log(res)
+    if (res.ok) return res.json()
+  })
+  .then( _ => {
+    window.location.reload();
+  })
   .catch(error => console.log(error));
 })
+//.then(data => renderGifts(data))
 
 
 // PUT/UPDATE
@@ -124,54 +129,54 @@ function deleteEntry(eventObj){
 
   fetch(deleteURL, { method: 'DELETE' })
   .then(res => res.json())
-  .then(data => renderGifts(data))
+  //.then(data => renderGifts(data))
   .catch(error => console.log(error));
 } 
 
 
 // To render the Bootstrap Card components
-function renderGifts(gifts) {
-  const giftContainer = document.getElementById('gift-container');
-  giftContainer.innerHTML = "";
+// function renderGifts(gifts) {
+//   const giftContainer = document.getElementById('gift-container');
+//   giftContainer.innerHTML = "";
 
 
-  for (const gift of gifts) {
-    const { _id, giftName, recipient, link, date, photo } = gift;
+//   for (const gift of gifts) {
+//     const { _id, giftName, recipient, link, date, photo } = gift;
 
-    const card = document.createElement('div')
-    card.classList.add('card');
-    card.style.width = '18rem';
+//     const card = document.createElement('div')
+//     card.classList.add('card');
+//     card.style.width = '18rem';
 
-    card.innerHTML = `
-<h4 class="card-header">${giftName}</h4> 
-<img src="${photo}" class="card-img-top" alt="${giftName}">
-<div class="card-body">
-  <h5 class="card-title">For: ${recipient}</h5>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">On: ${date}</li>
-      <li class="list-group-item">Last known price: ??</li>
-  </ul>
-  </div>
-<div id="${_id}" class="card-body">
-  <a href="${link}" id="card-links">Buy Now</a>
-</div>`;
+//     card.innerHTML = `
+// <h4 class="card-header">${giftName}</h4> 
+// <img src="${photo}" class="card-img-top" alt="${giftName}">
+// <div class="card-body">
+//   <h5 class="card-title">For: ${recipient}</h5>
+//     <ul class="list-group list-group-flush">
+//       <li class="list-group-item">On: ${date}</li>
+//       <li class="list-group-item">Last known price: ??</li>
+//   </ul>
+//   </div>
+// <div id="${_id}" class="card-body">
+//   <a href="${link}" id="card-links">Buy Now</a>
+// </div>`;
 
-    giftContainer.appendChild(card);
+//     giftContainer.appendChild(card);
 
-    // add buttons
-    const editBtn = document.createElement('btn');
-    editBtn.classList.add('btn', 'btn-info');
-    editBtn.setAttribute('DBid', _id);
-    editBtn.innerHTML = "Edit";
-    editBtn.addEventListener('click', editEntry);
+//     // add buttons
+//     const editBtn = document.createElement('btn');
+//     editBtn.classList.add('btn', 'btn-info');
+//     editBtn.setAttribute('DBid', _id);
+//     editBtn.innerHTML = "Edit";
+//     editBtn.addEventListener('click', editEntry);
 
-    const deleteBtn = document.createElement('btn');
-    deleteBtn.classList.add('btn', 'btn-danger');
-    deleteBtn.setAttribute('DBid', _id);
-    deleteBtn.innerHTML = "X";
-    deleteBtn.addEventListener('click', deleteEntry);
+//     const deleteBtn = document.createElement('btn');
+//     deleteBtn.classList.add('btn', 'btn-danger');
+//     deleteBtn.setAttribute('DBid', _id);
+//     deleteBtn.innerHTML = "X";
+//     deleteBtn.addEventListener('click', deleteEntry);
 
-    document.getElementById(`${_id}`).append(editBtn);
-    document.getElementById(`${_id}`).append(deleteBtn);
-  }
-}
+//     document.getElementById(`${_id}`).append(editBtn);
+//     document.getElementById(`${_id}`).append(deleteBtn);
+//   }
+//}

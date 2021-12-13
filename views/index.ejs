@@ -11,7 +11,6 @@
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
 
-  <script src="script.js"></script>
   <title>Gift List</title>
 </head>
 
@@ -45,10 +44,27 @@
 
   <div class="container">
 
-      <div class="d-flex flex-wrap justify-content-evenly" id="gift-container">
-        <!-- filled by JS -->
-      </div>
-    
+
+    <div class="d-flex flex-wrap justify-content-evenly" id="gift-container">
+      <!-- trying to move to EJS -->
+      <% for(let i=0; i < gifts.length; i++) { %>
+        <div class="card" style="width: 18rem;">
+          <h4 class="card-header"><%= gifts[i].giftName %> </h4>
+          <img src="<%= gifts[i].photo %> " class="card-img-top" alt="<%= gifts[i].giftName %>">
+          <div class="card-body">
+            <h5 class="card-title">For: <%= gifts[i].recipient %> </h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">On: <%= gifts[i].date %></li>
+              <li class="list-group-item">Last known price: ??</li>
+            </ul>
+          </div>
+          <div dbid="<%= gifts[i].id %>" class="card-body">
+            <a href="<%= gifts[i].link %>" id="card-links">Buy Now</a>
+          </div>
+        </div>
+        <% } %> 
+    </div>
+
   </div>
 
 
@@ -58,6 +74,7 @@
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
 
+    <script src="script.js"></script>
 
 </body>
 
