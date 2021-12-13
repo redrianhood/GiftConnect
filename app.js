@@ -83,9 +83,16 @@ client.connect()
       newGift.creator = userProfile.id
 
       // push: add all data to new Gift card
-      giftList.insertOne(newGift)
-      // redirect
-      res.redirect(303, "/userprofile")
+      await giftList.insertOne(newGift)
+
+      res.redirect(303, '/userprofile')
+      // res.redirect(req.originalUrl)
+      // const gifts = await giftList.find({creator: userProfile.id}).toArray()
+      // res.render('index.ejs', {
+      //   gifts: gifts
+      // })
+      // response.redirect(request.get('referer'));
+    
     })
 
 
@@ -193,6 +200,5 @@ client.connect()
         // Successful authentication, redirect success.
         //res.redirect('/success');
         res.redirect('/userprofile');
-        console.log(req.user.id)
       });
   })
