@@ -133,7 +133,6 @@ function deleteEntry(eventObj){
   .catch(error => console.log(error));
 } 
 
-
 // To render the Bootstrap Card components
 // function renderGifts(gifts) {
 //   const giftContainer = document.getElementById('gift-container');
