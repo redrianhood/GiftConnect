@@ -201,4 +201,12 @@ client.connect()
         //res.redirect('/success');
         res.redirect('/userprofile');
       });
+
+      server.get('/logout', function(req, res) {
+        req.session.destroy(function(e){
+            req.logout();
+            res.redirect('/');
+            //console.log(res)
+        });
+    });
   })

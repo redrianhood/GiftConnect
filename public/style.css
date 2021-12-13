@@ -6,3 +6,41 @@ body{
   display: flex;
   flex-wrap: wrap;
 } */
+
+#container {
+  width: 550px;
+  margin: 0 auto;
+}
+
+.container {
+  width: 650px;
+  margin: 0 auto;
+}
+
+#footer {
+  padding: 40px 0 0 0;
+  overflow: hidden;
+  margin: 0 0 30px 0;
+}
+
+#footer p#copyright {
+  font-size: 12px;
+  float: left;
+  margin: 0 0 0 30px;
+  color: #070707;
+}
+
+#footer p#back-top {
+  font-size: 12px;
+  float: right;
+  margin: 0 30px 0 0;
+}
+
+#footer a {
+  color: #a12121;
+  text-decoration: none;
+}
+
+#footer a:hover {
+  color: #671111;
+}
