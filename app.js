@@ -40,11 +40,11 @@ client.connect()
     });
 
     // GET/READ
-    server.get("/userprofile", async (req, res) => {
+    server.get("/userprofile", isLoggedIn, async (req, res) => {
       // send proper data from Mongo
       //add creator ID to find/filer unique entries {creator: req.user.id}
       //get will only render the entries related to the specific creator
-      const gifts = await giftList.find({creator: userProfile.id}).toArray()
+      const gifts = await giftList.find({ creator: userProfile.id }).toArray()
       //  res.send(findResult)
       res.render('index.ejs', {
         gifts: gifts
@@ -53,7 +53,7 @@ client.connect()
 
 
     // POST/CREATE
-    server.post('/userprofile', async (req, res) => {
+    server.post('/userprofile', isLoggedIn, async (req, res) => {
       // get data values from form: giftName, recipient, link, date
       const { giftName, recipient, link, date } = req.body
       // VALIDATION: ensure all fields are valid
@@ -92,12 +92,12 @@ client.connect()
       //   gifts: gifts
       // })
       // response.redirect(request.get('referer'));
-    
+
     })
 
 
     // PUT/UPDATE
-    server.put('/userprofile', async (req, res) => {
+    server.put('/userprofile', isLoggedIn, async (req, res) => {
 
       // get edit data: _id, giftName, recipient, link, date
       const { _id, giftName, recipient, link, date } = req.body
@@ -136,7 +136,7 @@ client.connect()
     })
 
     // DELETE
-    server.delete('/userprofile/:id', async (req, res) => {
+    server.delete('/userprofile/:id', isLoggedIn, async (req, res) => {
       // get id to be deleted
       const giftListID = req.params.id;
 
@@ -169,7 +169,7 @@ client.connect()
     server.use(passport.initialize());
     server.use(passport.session());
 
-    server.get('/success', (req, res) => res.send({user: req.user}));
+    server.get('/success', (req, res) => res.send({ user: req.user }));
     server.get('/error', (req, res) => res.send("error logging in"));
 
     passport.serializeUser(function (user, cb) {
@@ -184,7 +184,7 @@ client.connect()
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       //callbackURL: "http://localhost:3000/auth/google/callback"
-      callbackURL: "https://giftlist-sde-api.herokuapp.com/auth/google/callback"
+      callbackURL: "http://localhost:3000/auth/google/callback"
     },
       function (accessToken, refreshToken, profile, done) {
         userProfile = profile;
@@ -203,11 +203,18 @@ client.connect()
         res.redirect('/userprofile');
       });
 
-      server.get('/logout', function(req, res) {
-        req.session.destroy(function(e){
-            req.logout();
-            res.redirect('/');
-            //console.log(res)
-        });
+    server.get('/logout', function (req, res) {
+      req.session.destroy(function (e) {
+        req.logout();
+        res.redirect('/');
+      });
     });
-  })
+
+    function isLoggedIn (req, res, next) {
+      if (req.user) {
+        next() }
+        else {
+          res.redirect("/login.ejs") //re-direct to login page if false 
+    }
+  }
+})
