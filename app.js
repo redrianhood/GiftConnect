@@ -42,7 +42,9 @@ client.connect()
     // GET/READ
     server.get("/userprofile", async (req, res) => {
       // send proper data from Mongo
-      const gifts = await giftList.find({}).toArray()
+      //add creator ID to find/filer unique entries {creator: req.user.id}
+      //get will only render the entries related to the specific creator
+      const gifts = await giftList.find({creator: userProfile.id}).toArray()
       //  res.send(findResult)
       res.render('index.ejs', {
         gifts: gifts
@@ -76,6 +78,9 @@ client.connect()
       if (date && date.length !== 0) {
         newGift.date = date;
       }
+
+      //new gift creator value req.user.id
+      newGift.creator = userProfile.id
 
       // push: add all data to new Gift card
       giftList.insertOne(newGift)
@@ -157,7 +162,7 @@ client.connect()
     server.use(passport.initialize());
     server.use(passport.session());
 
-    server.get('/success', (req, res) => res.send(userProfile));
+    server.get('/success', (req, res) => res.send({user: req.user}));
     server.get('/error', (req, res) => res.send("error logging in"));
 
     passport.serializeUser(function (user, cb) {
@@ -188,5 +193,6 @@ client.connect()
         // Successful authentication, redirect success.
         //res.redirect('/success');
         res.redirect('/userprofile');
+        console.log(req.user.id)
       });
   })
