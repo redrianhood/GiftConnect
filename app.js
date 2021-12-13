@@ -142,8 +142,6 @@ client.connect()
     const session = require('express-session');
     const passport = require('passport');
     const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-    const GOOGLE_CLIENT_ID = '769439980220-pqtrn6qn6mug14kc0fap67bcic0mbqsh.apps.googleusercontent.com';
-    const GOOGLE_CLIENT_SECRET = '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';
 
     server.set('view engine', 'ejs');
 
