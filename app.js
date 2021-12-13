@@ -8,6 +8,7 @@ const cors = require('cors');
 
 const server = express();
 server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
 server.use(cors());
 server.set('view engine', 'ejs');
 server.use(express.static(__dirname + '/public'))
@@ -31,9 +32,11 @@ client.connect()
     // GET/READ
     server.get("/userprofile", async (req, res) => {
       // send proper data from Mongo
-      const findResult = await giftList.find({}).toArray()
+      const gifts = await giftList.find({}).toArray()
     //  res.send(findResult)
-      res.render('index.ejs', findResult)
+      res.render('index.ejs', {
+        gifts: gifts
+      })
     });
 
 
@@ -67,7 +70,10 @@ client.connect()
       // push: add all data to new Gift card
       giftList.insertOne(newGift)
       // redirect
-      res.redirect(303, "/userprofile")
+      // res.redirect(303, "/userprofile")
+      res.render('index.ejs', {
+        gifts: giftList
+      })
     })
 
 
