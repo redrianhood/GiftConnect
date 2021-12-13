@@ -1,5 +1,5 @@
-const HEROKU_API_ROOT_URL = 'http://localhost:3000'
-// 'https://giftlist-sde-api.herokuapp.com/'
+const HEROKU_API_ROOT_URL = 'https://giftlist-sde-api.herokuapp.com'
+// 'https://giftlist-sde-api.herokuapp.com'
 // 'http://localhost:3000'
 // '/userprofile'
 const PROFILE_URL = `${HEROKU_API_ROOT_URL}/userprofile`;
