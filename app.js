@@ -80,10 +80,7 @@ client.connect()
       // push: add all data to new Gift card
       giftList.insertOne(newGift)
       // redirect
-      // res.redirect(303, "/userprofile")
-      res.render('index.ejs', {
-        gifts: giftList
-      })
+      res.redirect(303, "/userprofile")
     })
 
 
