@@ -39,8 +39,13 @@ document.getElementById('gift-form').addEventListener('submit', eventObj => {
 })
 
 
-document.getElementById("edit-btn").addEventListener('click', editEntry)
 // PUT/UPDATE
+let editBtns = document.getElementsByClassName('edit-btn');
+
+for (let editBtn of editBtns){
+  editBtn.addEventListener('click', editEntry);
+}
+
 function editEntry(eventObj) {
   const editBtn = eventObj.target;
   const card = editBtn.closest('.card');
@@ -110,8 +115,14 @@ function editEntry(eventObj) {
 
 }
 
-document.getElementById("delete-btn").addEventListener('click', deleteEntry)
+
 // DELETE
+let deleteBtns = document.getElementsByClassName('delete-btn')
+
+for (let deleteBtn of deleteBtns){
+  deleteBtn.addEventListener('click', deleteEntry)
+}
+
 function deleteEntry(eventObj){
   // prompt "are you sure?"
   
@@ -127,68 +138,3 @@ function deleteEntry(eventObj){
   // //.then(data => renderGifts(data))
   // .catch(error => console.log(error));
 } 
-
-
-
-
-
-// BEFORE EJS - KEEP FOR REFERENCE UNTIL LATER
-// To render the Bootstrap Card components
-// function renderGifts(gifts) {
-//   const giftContainer = document.getElementById('gift-container');
-//   giftContainer.innerHTML = "";
-
-
-//   for (const gift of gifts) {
-//     const { _id, giftName, recipient, link, date, photo } = gift;
-
-//     const card = document.createElement('div')
-//     card.classList.add('card');
-//     card.style.width = '18rem';
-
-//     card.innerHTML = `
-// <h4 class="card-header">${giftName}</h4> 
-// <img src="${photo}" class="card-img-top" alt="${giftName}">
-// <div class="card-body">
-//   <h5 class="card-title">For: ${recipient}</h5>
-//     <ul class="list-group list-group-flush">
-//       <li class="list-group-item">On: ${date}</li>
-//       <li class="list-group-item">Last known price: ??</li>
-//   </ul>
-//   </div>
-// <div id="${_id}" class="card-body">
-//   <a href="${link}" id="card-links">Buy Now</a>
-// </div>`;
-
-//     giftContainer.appendChild(card);
-
-//     // add buttons
-//     const editBtn = document.createElement('btn');
-//     editBtn.classList.add('btn', 'btn-info');
-//     editBtn.setAttribute('DBid', _id);
-//     editBtn.innerHTML = "Edit";
-//     editBtn.addEventListener('click', editEntry);
-
-//     const deleteBtn = document.createElement('btn');
-//     deleteBtn.classList.add('btn', 'btn-danger');
-//     deleteBtn.setAttribute('DBid', _id);
-//     deleteBtn.innerHTML = "X";
-//     deleteBtn.addEventListener('click', deleteEntry);
-
-//     document.getElementById(`${_id}`).append(editBtn);
-//     document.getElementById(`${_id}`).append(deleteBtn);
-//   }
-//}
-
-// GET/READ
-// fetch(PROFILE_URL)
-//   .then(res => {
-//     console.log(res);
-//     res.json();
-//   })
-//   // .then(gifts => {
-//   //    renderGifts(gifts);
-//   //  })
-//   .catch(error => {
-//     console.log(error);
-//   })

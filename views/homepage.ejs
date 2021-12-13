@@ -18,26 +18,16 @@
 </head>
 
 <body>
-  <div id="container">
-    <div class="jumbotron">
-      <h1 class="display-4 text text-center">Welcome to Gift Connect!</h1>
-      <p class="lead text-center">This is your one stop shop to keep track of all your gift needs.</p>
-      <p class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a class="btn btn-secondary btn-lg justify-content-md-end" id="btn-login" href="login.ejs" role="button">Log
-          in</a>
-      </p>
-      <hr class="my-4">
-      <p>Have you ever been worried that you'll forget to buy a gift for someone? Clear your head by putting those
-        thoughts on your Gift List Connect. One of the most important reasons you should use a to do list, even for gift
-        buying, is that it will help you stay organized. When you write all your tasks in a list, they become more
-        manageable. </p>
+  <%- include('templates/header') %>
+
+    <div class="container-fluid">
+      <p class="text-center">Have you ever been worried that you'll forget to buy a gift for someone? Clear your head by
+        putting those thoughts on your Gift List Connect. One of the most important reasons you should use a to do list,
+        even for gift buying, is that it will help you stay organized. When you write all your tasks in a list, they
+        become more manageable. </p>
       <br>
-      <p>What is a Gift List Connect? The definition is a simple one. It's a list of gifts you need to purchase, or
-        gifts that you want receive (under developement). </p>
-      <p></p>
-      <p class="lead">
-        <a class="btn btn-primary btn-lg" id="btn-login" href="/login" role="button">Register</a>
-      </p>
+      <p class="text-center">What is a Gift List Connect? The definition is a simple one. It's a list of gifts you need
+        to purchase, or gifts that you want receive (under developement).</p>
     </div>
     <br>
     <br>
@@ -82,12 +72,9 @@
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-  </div>
-  <div id="footer">
-    <p id="copyright">&copy; Created by Rian Boren & Sheila Cartagena</p>
-    <p id="back-top"><a href="#">Back to the top?</a></p>
-  </div>
-  </div>
+
+    <%- include('templates/footer'); %>
+
 </body>
 
 </html>
