@@ -40,18 +40,19 @@ document.getElementById('gift-form').addEventListener('submit', eventObj => {
     },
     body: JSON.stringify(giftEntry)
   })
-  .then(res => {
-    console.log(res)
-    if (res.ok) return res.json()
-  })
-  .then( _ => {
-    window.location.reload();
-  })
-  .catch(error => console.log(error));
+  // .then(res => {
+  //   console.log(res)
+  //   if (res.ok) return res.json()
+  // })
+  // .then( _ => {
+  //   window.location.reload();
+  // })
+  // .catch(error => console.log(error));
 })
 //.then(data => renderGifts(data))
 
 
+document.getElementById("edit-btn").addEventListener('click', editEntry)
 // PUT/UPDATE
 function editEntry(eventObj) {
   const editBtn = eventObj.target;
@@ -119,7 +120,7 @@ function editEntry(eventObj) {
 
 }
 
-
+document.getElementById("delete-btn").addEventListener('click', deleteEntry)
 // DELETE
 function deleteEntry(eventObj){
   // prompt "are you sure?"
@@ -128,9 +129,9 @@ function deleteEntry(eventObj){
   const deleteURL = `${PROFILE_URL}/${id}`
 
   fetch(deleteURL, { method: 'DELETE' })
-  .then(res => res.json())
-  //.then(data => renderGifts(data))
-  .catch(error => console.log(error));
+  // .then(res => res.json())
+  // //.then(data => renderGifts(data))
+  // .catch(error => console.log(error));
 } 
 
 
