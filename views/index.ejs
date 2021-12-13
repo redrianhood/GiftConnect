@@ -17,6 +17,17 @@
 <body>
   <div>
     <!-- navbar/header -->
+
+    <div id="container">
+      <div class="jumbotron">
+        <h1 class="display-4 text text-center">Welcome to Gift Connect!</h1>
+        <p class="lead text-center">This is your one stop shop to keep track of all your gift needs.</p>
+        <p class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <a class="btn btn-secondary btn-lg justify-content-md-end" id="btn-logout" href="/logout" role="button">Log
+            out</a>
+        </p>
+        <hr class="my-4">
+      </div>
   </div>
 
   <div class="container" id="form-container">
@@ -49,12 +60,16 @@
       <!-- trying to move to EJS -->
       <% for(let i=0; i < gifts.length; i++) { %>
         <div class="card" style="width: 18rem;">
-          <h4 class="card-header"><%= gifts[i].giftName %> </h4>
+          <h4 class="card-header">
+            <%= gifts[i].giftName %>
+          </h4>
           <img src="<%= gifts[i].photo %> " class="card-img-top" alt="<%= gifts[i].giftName %>">
           <div class="card-body">
-            <h5 class="card-title">For: <%= gifts[i].recipient %> </h5>
+            <h5 class="card-title">For: <%= gifts[i].recipient %>
+            </h5>
             <ul class="list-group list-group-flush">
-              <li class="list-group-item">On: <%= gifts[i].date %></li>
+              <li class="list-group-item">On: <%= gifts[i].date %>
+              </li>
               <li class="list-group-item">Last known price: ??</li>
             </ul>
           </div>
@@ -63,9 +78,9 @@
             <button class="btn btn-info" dbid="<%= gifts[i]._id %>" id="edit-btn">Edit</button>
             <button class="btn btn-danger" dbid="<%= gifts[i]._id %>" id="delete-btn">Delete</button>
           </div>
-          
+
         </div>
-        <% } %> 
+        <% } %>
     </div>
 
   </div>
@@ -77,7 +92,7 @@
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"></script>
 
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 
 </body>
 
