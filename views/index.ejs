@@ -58,9 +58,12 @@
               <li class="list-group-item">Last known price: ??</li>
             </ul>
           </div>
-          <div dbid="<%= gifts[i].id %>" class="card-body">
+          <div dbid="<%= gifts[i]._id %>" class="card-body">
             <a href="<%= gifts[i].link %>" id="card-links">Buy Now</a>
+            <button class="btn btn-info" dbid="<%= gifts[i]._id %>" id="edit-btn">Edit</button>
+            <button class="btn btn-danger" dbid="<%= gifts[i]._id %>" id="delete-btn">Delete</button>
           </div>
+          
         </div>
         <% } %> 
     </div>

@@ -5,19 +5,6 @@ const HEROKU_API_ROOT_URL = 'http://localhost:3000'
 const PROFILE_URL = `${HEROKU_API_ROOT_URL}/userprofile`;
 
 
-// GET/READ
-// fetch(PROFILE_URL)
-//   .then(res => {
-//     console.log(res);
-//     res.json();
-//   })
-//   // .then(gifts => {
-//   //    renderGifts(gifts);
-//   //  })
-//   .catch(error => {
-//     console.log(error);
-//   })
-
 // POST/CREATE
 document.getElementById('gift-form').addEventListener('submit', eventObj => {
   eventObj.preventDefault();  // currently prevents required on input
@@ -35,23 +22,24 @@ document.getElementById('gift-form').addEventListener('submit', eventObj => {
   
   fetch(PROFILE_URL, {
     method: 'POST',
+    redirect: 'follow',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(giftEntry)
   })
-  .then(res => {
-    console.log(res)
-    if (res.ok) return res.json()
-  })
-  .then( _ => {
+  // .then(res => {
+  //   if (res.ok) return res.text()
+  // })
+  .then( html => {
+    //document.writeln(html)
     window.location.reload();
   })
   .catch(error => console.log(error));
 })
-//.then(data => renderGifts(data))
 
 
+document.getElementById("edit-btn").addEventListener('click', editEntry)
 // PUT/UPDATE
 function editEntry(eventObj) {
   const editBtn = eventObj.target;
@@ -107,19 +95,22 @@ function editEntry(eventObj) {
     },
     body: JSON.stringify(newGift)
   })
+  // IDEALLY 
+  // we can ace this and replace with redirect('/userprofile')
+  // when we sort out why it doesn't work
   .then(res => res.json())
   .then(data => {
     nameLoc.innerHTML = data.giftName;
     recipientLoc.innerText = 'For: ' + data.recipient;
     linkLoc.setAttribute('href', newLink);
-    console.log(dateLoc)
-    dateLoc.innerText = 'On: ' + data.date;  
+    dateLoc.innerText = 'On: ' + data.date;
+
   })
   .catch(error => console.log(error));
 
 }
 
-
+document.getElementById("delete-btn").addEventListener('click', deleteEntry)
 // DELETE
 function deleteEntry(eventObj){
   // prompt "are you sure?"
@@ -128,11 +119,20 @@ function deleteEntry(eventObj){
   const deleteURL = `${PROFILE_URL}/${id}`
 
   fetch(deleteURL, { method: 'DELETE' })
-  .then(res => res.json())
-  //.then(data => renderGifts(data))
+  .then( _ => {
+    window.location.reload();
+  })
   .catch(error => console.log(error));
+  // .then(res => res.json())
+  // //.then(data => renderGifts(data))
+  // .catch(error => console.log(error));
 } 
 
+
+
+
+
+// BEFORE EJS - KEEP FOR REFERENCE UNTIL LATER
 // To render the Bootstrap Card components
 // function renderGifts(gifts) {
 //   const giftContainer = document.getElementById('gift-container');
@@ -179,3 +179,16 @@ function deleteEntry(eventObj){
 //     document.getElementById(`${_id}`).append(deleteBtn);
 //   }
 //}
+
+// GET/READ
+// fetch(PROFILE_URL)
+//   .then(res => {
+//     console.log(res);
+//     res.json();
+//   })
+//   // .then(gifts => {
+//   //    renderGifts(gifts);
+//   //  })
+//   .catch(error => {
+//     console.log(error);
+//   })
