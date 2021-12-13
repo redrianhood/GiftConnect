@@ -46,7 +46,7 @@ client.connect()
       //get will only render the entries related to the specific creator
       const gifts = await giftList.find({creator: userProfile.id}).toArray()
       //  res.send(findResult)
-      res.render('index.ejs', {
+      res.render('profile.ejs', {
         gifts: gifts
       })
     });
@@ -88,7 +88,7 @@ client.connect()
       res.redirect(303, '/userprofile')
       // res.redirect(req.originalUrl)
       // const gifts = await giftList.find({creator: userProfile.id}).toArray()
-      // res.render('index.ejs', {
+      // res.render('profile.ejs', {
       //   gifts: gifts
       // })
       // response.redirect(request.get('referer'));
