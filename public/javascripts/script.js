@@ -1,9 +1,5 @@
-const HEROKU_API_ROOT_URL = 'http://localhost:3000'
+const HEROKU_API_ROOT_URL = 'https://giftlist-sde-api.herokuapp.com'
 const PROFILE_URL = `${HEROKU_API_ROOT_URL}/userprofile`;
-// 'https://giftlist-sde-api.herokuapp.com'
-// 'http://localhost:3000'
-// '/userprofile'
-
 
 // POST/CREATE
 document.getElementById('gift-form').addEventListener('submit', eventObj => {
@@ -28,11 +24,7 @@ document.getElementById('gift-form').addEventListener('submit', eventObj => {
     },
     body: JSON.stringify(giftEntry)
   })
-  // .then(res => {
-  //   if (res.ok) return res.text()
-  // })
   .then( html => {
-    //document.writeln(html)
     window.location.reload();
   })
   .catch(error => console.log(error));
@@ -54,7 +46,7 @@ function editEntry(eventObj) {
   // oldGift data for comparison and setting logic  
   const oldGiftName = card.children[0].innerText;
   const oldRecipient = card.children[2].children[0].innerText.slice(5);
-  const oldLink = card.children[3].children[0].href; 
+  const oldLink = card.children[2].children[1].children[1].children[0].href; 
   const oldDate = card.children[2].children[1].children[0].innerText.slice(4); 
 
   // newGift data from user  
@@ -100,9 +92,6 @@ function editEntry(eventObj) {
     },
     body: JSON.stringify(newGift)
   })
-  // IDEALLY 
-  // we can ace this and replace with redirect('/userprofile')
-  // when we sort out why it doesn't work
   .then(res => res.json())
   .then(data => {
     nameLoc.innerHTML = data.giftName;
