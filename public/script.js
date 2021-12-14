@@ -109,6 +109,7 @@ function editEntry(eventObj) {
     recipientLoc.innerText = 'For: ' + data.recipient;
     linkLoc.setAttribute('href', newLink);
     dateLoc.innerText = 'On: ' + data.date;
+    // window.location.reload();
 
   })
   .catch(error => console.log(error));
