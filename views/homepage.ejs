@@ -21,56 +21,60 @@
   <%- include('templates/header') %>
 
     <div class="container-fluid">
-      <p class="text-center">Have you ever been worried that you'll forget to buy a gift for someone? Clear your head by
+      <p class="col-lg-6 col-9 mx-auto text-center">Have you ever been worried that you'll forget to buy a gift for
+        someone? Clear your head by
         putting those thoughts on your Gift List Connect. One of the most important reasons you should use a to do list,
         even for gift buying, is that it will help you stay organized. When you write all your tasks in a list, they
         become more manageable. </p>
       <br>
-      <p class="text-center">What is a Gift List Connect? The definition is a simple one. It's a list of gifts you need
+      <p class="col-lg-6 col-9 mx-auto text-center">What is a Gift List Connect? The definition is a simple one. It's a
+        list of gifts you need
         to purchase, or gifts that you want receive (under developement).</p>
     </div>
     <br>
     <br>
 
-    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-          aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-          aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-          aria-label="Slide 3"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
-          aria-label="Slide 4"></button>
+    <div class="container-fluid col-md-9 col-11">
+      <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+            aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+            aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+            aria-label="Slide 3"></button>
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
+            aria-label="Slide 4"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://unsplash.com/photos/PxM8aeJbzvk" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Z2lmdHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+              class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://images.unsplash.com/photo-1607469256872-48074e807b0a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Z2lmdHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+              class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="https://unsplash.com/photos/_qN6tmGjmtg" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="https://unsplash.com/photos/PxM8aeJbzvk" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-          <img
-            src="https://images.unsplash.com/photo-1549465220-1a8b9238cd48?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Z2lmdHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-            class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-          <img
-            src="https://images.unsplash.com/photo-1607469256872-48074e807b0a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Z2lmdHN8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-            class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-          <img src="https://unsplash.com/photos/_qN6tmGjmtg" class="d-block w-100" alt="...">
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-        data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
     </div>
 
     <%- include('templates/footer'); %>

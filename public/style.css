@@ -1,5 +1,5 @@
 body{
-  background-color: peachpuff;
+  background-color: #c2ebf3;
 }
 
 /* #gift-container{
@@ -43,4 +43,14 @@ body{
 
 #footer a:hover {
   color: #671111;
+}
+
+.btn-my{
+  background-color: #1d95a5;
+  color: whitesmoke;
+}
+
+.btn-log{
+  background-color: #305b69;
+  color: whitesmoke;
 }
