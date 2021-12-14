@@ -1,0 +1,2 @@
+These routes were used to set up for Auth0.
+Retained for future Auth0 work.
