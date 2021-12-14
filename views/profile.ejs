@@ -11,16 +11,15 @@
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <link rel="stylesheet" href="/stylesheets/style.css">
 
-  <link href="https://fonts.googleapis.com/css2?family=Courgette&display=swap" rel="stylesheet">
+  <%- include('templates/icon&font') %> 
   <title>Gift Connect</title>
 </head>
 
 <body>
   <!-- navbar -->
 
-  <div class="container-fluid">
-    <div class="logo text-center"><img class="text-center" src="/images/logo.jfif" alt=""></div>
-    <h1 class="display-4 text-center mb-5">Welcome to your Gift Connect <%= name %>!</h1>
+  <div class="container-fluid title">
+    <h1 class="display-4 text-center mb-5 pt-5">Welcome to your Gift Connect <%= name %>!</h1>
     <div class="row">
       <div class="col-4 offset-md-9 offset-8">
         <a class="btn btn-log btn-sm justify-content-end" id="btn-logout" href="/logout" role="button">Log
