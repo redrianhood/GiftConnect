@@ -58,3 +58,16 @@ body{
 .svg{
   max-width: 500px;
 }
+
+.title{
+  font-family: 'Courgette', cursive, sans-serif;
+}
+
+.edit-btn{
+  background-color: #23c1dd;
+  color: white;
+}
+
+.delete-btn{
+  background-color: #ed3847;
+}

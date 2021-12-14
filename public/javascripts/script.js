@@ -1,13 +1,13 @@
 const HEROKU_API_ROOT_URL = 'http://localhost:3000'
+const PROFILE_URL = `${HEROKU_API_ROOT_URL}/userprofile`;
 // 'https://giftlist-sde-api.herokuapp.com'
 // 'http://localhost:3000'
 // '/userprofile'
-const PROFILE_URL = `${HEROKU_API_ROOT_URL}/userprofile`;
 
 
 // POST/CREATE
 document.getElementById('gift-form').addEventListener('submit', eventObj => {
-  eventObj.preventDefault();  // currently prevents required on input
+  eventObj.preventDefault();
 
   const giftName = document.getElementById('giftName').value;
   const recipient = document.getElementById('recipient').value;
@@ -58,14 +58,13 @@ function editEntry(eventObj) {
   const oldDate = card.children[2].children[1].children[0].innerText.slice(4); 
 
   // newGift data from user  
-  // fancy prompt? https://code.daypilot.org/17463/javascript-prompt-replacement
   let newGiftName = prompt('New Gift Name and Picture?');
   let newRecipient = prompt('New Recipient');
   let newLink = prompt('New Link?');
   let newDate = prompt('New Delivery Date?');
 
   
-  // Comparing oldGift to newGift data
+  // update newGift data
   if (newGiftName === undefined || newGiftName === null || newGiftName.length === 0){
     newGiftName = oldGiftName;
   }
@@ -79,6 +78,7 @@ function editEntry(eventObj) {
     newDate = oldDate;
   }
   
+  // create newGift
   const newGift = {
     _id: id,
     giftName: newGiftName, 
@@ -109,11 +109,8 @@ function editEntry(eventObj) {
     recipientLoc.innerText = 'For: ' + data.recipient;
     linkLoc.setAttribute('href', newLink);
     dateLoc.innerText = 'On: ' + data.date;
-    // window.location.reload();
-
   })
   .catch(error => console.log(error));
-
 }
 
 
@@ -125,7 +122,6 @@ for (let deleteBtn of deleteBtns){
 }
 
 function deleteEntry(eventObj){
-  // prompt "are you sure?"
   
   const id = eventObj.target.getAttribute('DBid');
   const deleteURL = `${PROFILE_URL}/${id}`
@@ -135,7 +131,4 @@ function deleteEntry(eventObj){
     window.location.reload();
   })
   .catch(error => console.log(error));
-  // .then(res => res.json())
-  // //.then(data => renderGifts(data))
-  // .catch(error => console.log(error));
 } 
