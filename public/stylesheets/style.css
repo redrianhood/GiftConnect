@@ -24,14 +24,21 @@ body{
 }
 
 #footer p#copyright {
-  font-size: 12px;
+  font-size: 18px;
   float: left;
   margin: 0 0 0 30px;
   color: #070707;
 }
 
+#footer p#contact-form {
+  font-size: 18px;
+  text-align: center;
+  margin: 0 0 0 30px;
+  color: #070707;
+}
+
 #footer p#back-top {
-  font-size: 12px;
+  font-size: 18px;
   float: right;
   margin: 0 30px 0 0;
 }
