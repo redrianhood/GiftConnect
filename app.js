@@ -13,7 +13,7 @@ server.use(cors());
 server.set('view engine', 'ejs');
 server.use(express.static(__dirname + '/public'))
 
-const { getUnsplashPhoto } = require("./services");
+const { getUnsplashPhoto } = require("./public/javascripts/services");
 const { application } = require('express');
 const MongoDB_URL = `mongodb+srv://${process.env.MDB_USER}:${process.env.MDB_PW}@cluster0.nhbd7.mongodb.net/Gift-List-Application?retryWrites=true&w=majority`;
 
@@ -45,9 +45,11 @@ client.connect()
       //add creator ID to find/filer unique entries {creator: req.user.id}
       //get will only render the entries related to the specific creator
       const gifts = await giftList.find({ creator: userProfile.id }).toArray()
+      const name = userProfile.name.givenName
       //  res.send(findResult)
       res.render('profile.ejs', {
-        gifts: gifts
+        gifts: gifts,
+        name: name
       })
     });
 

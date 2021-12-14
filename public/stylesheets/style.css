@@ -54,3 +54,7 @@ body{
   background-color: #305b69;
   color: whitesmoke;
 }
+
+.svg{
+  max-width: 500px;
+}
