@@ -13,7 +13,7 @@ server.use(cors());
 server.set('view engine', 'ejs');
 server.use(express.static(__dirname + '/public'))
 
-const { getUnsplashPhoto } = require("./services");
+const { getUnsplashPhoto } = require("./public/javascripts/services");
 const { application } = require('express');
 const MongoDB_URL = `mongodb+srv://${process.env.MDB_USER}:${process.env.MDB_PW}@cluster0.nhbd7.mongodb.net/Gift-List-Application?retryWrites=true&w=majority`;
 
