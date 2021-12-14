@@ -39,6 +39,10 @@ client.connect()
       res.render('login.ejs')
     });
 
+    // GET/READ - render log in page
+    server.get("/contact", (req, res) => {
+      res.render('contact.ejs')
+    });
     // GET/READ
     server.get("/userprofile", isLoggedIn, async (req, res) => {
       // send proper data from Mongo
