@@ -45,9 +45,11 @@ client.connect()
       //add creator ID to find/filer unique entries {creator: req.user.id}
       //get will only render the entries related to the specific creator
       const gifts = await giftList.find({ creator: userProfile.id }).toArray()
+      const name = userProfile.name.givenName
       //  res.send(findResult)
       res.render('profile.ejs', {
-        gifts: gifts
+        gifts: gifts,
+        name: name
       })
     });
 

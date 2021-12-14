@@ -18,8 +18,7 @@
   <!-- navbar -->
 
   <div class="container-fluid">
-    <h1 class="display-4 text-center">Welcome to Gift Connect!</h1>
-    <p class="lead text-center">This is your one stop shop to keep track of all your gift needs.</p>
+    <h1 class="display-4 text-center mb-5">Welcome to your Gift Connect <%= name %>!</h1>
     <div class="row">
       <div class="col-md-3 col-5 offset-md-9 offset-6">
         <a class="btn btn-log btn-lg justify-content-end" id="btn-logout" href="/logout" role="button">Log
@@ -29,27 +28,35 @@
     <hr class="my-4">
   </div>
 
+  <div class="row justify-content-center mb-5">
+    <img class="svg" src="/images/undraw_gifts.svg" alt="Little gift monsters with gifts">
+  </div>
+
+  <div class="container-fluid">
+    <h3 class="col-lg-6 col-9 mx-auto mb-5 text-center">Below you'll find all you need to start your GiftConnect journey! Just start putting in the information of gifts you want to buy, edit them when needed, or delete them if you're all done!</h3>
+  </div>
+
   <div class="container-fluid" id="form-container">
     <form id="gift-form">
-      <div class="form-group col-lg-6 col-9 mx-auto">
+      <div class="form-group col-lg-4 col-md-6 col-9 mx-auto">
         <label for="giftName" class="form-label">Gift Name</label>
         <input required name="giftName" type="text" class="form-control" id="giftName" placeholder="What is the gift?">
       </div>
-      <div class="form-group col-lg-6 col-9 mx-auto">
+      <div class="form-group col-lg-4 col-md-6 col-9 mx-auto">
         <label for="recipient" class="form-label">Recipient</label>
         <input required name="recipient" type="text" class="form-control" id="recipient" placeholder="Who is it for?">
       </div>
-      <div class="form-group col-lg-6 col-9 mx-auto">
+      <div class="form-group col-lg-4 col-md-6 col-9 mx-auto">
         <label for="link" class="form-label">Purchase Link</label>
         <input required name="link" type="url" class="form-control" id="link" placeholder="Where can you buy it?">
       </div>
-      <div class="form-group col-lg-6 col-9 mx-auto">
+      <div class="form-group col-lg-4 col-md-6 col-9 mx-auto">
         <label for="date" class="form-label">Gift Date</label>
         <input name="date" type="text" class="form-control" id="date" placeholder="What date is it for?">
       </div>
       <br>
       <div class="d-grid d-flex justify-content-center">
-        <button type="submit" class="btn btn-my mb-3 col-lg-3 col-6<%  %> ">Add Gift</button>
+        <button type="submit" class="btn btn-my mb-3 col-lg-2 col-md-4 col-6">Add Gift</button>
       </div>
     </form>
   </div>
@@ -73,7 +80,7 @@
             </ul>
           </div>
           <div dbid="<%= gifts[i]._id %>" class="card-body">
-            
+
             <button class="btn btn-info edit-btn" dbid="<%= gifts[i]._id %>">Edit</button>
             <button class="btn btn-danger delete-btn" dbid="<%= gifts[i]._id %>">Delete</button>
           </div>
