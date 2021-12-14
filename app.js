@@ -161,6 +161,7 @@ client.connect()
     server.use(passport.initialize());
     server.use(passport.session());
 
+    server.get('/success', (req, res) => res.send({ user: req.user }));
     server.get('/error', (req, res) => res.send("error logging in"));
 
     passport.serializeUser(function (user, cb) {
