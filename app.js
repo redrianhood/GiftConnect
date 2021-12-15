@@ -17,6 +17,11 @@ server.use(cors());
 server.set('view engine', 'ejs');
 server.use(express.static(__dirname + '/public'))
 
+const { getUnsplashPhoto } = require("./public/javascripts/services");
+// const { application } = require('express');
+const MongoDB_URL = `mongodb+srv://${process.env.MDB_USER}:${process.env.MDB_PW}@cluster0.nhbd7.mongodb.net/Gift-List-Application?retryWrites=true&w=majority`;
+const client = new MongoClient(MongoDB_URL);
+
 //Passport 
 server.use(session({
   resave: false,
@@ -47,17 +52,12 @@ passport.use(new GoogleStrategy({
   }
 ));
 
-const { getUnsplashPhoto } = require("./public/javascripts/services");
-const { application } = require('express');
-const MongoDB_URL = `mongodb+srv://${process.env.MDB_USER}:${process.env.MDB_PW}@cluster0.nhbd7.mongodb.net/Gift-List-Application?retryWrites=true&w=majority`;
 
-const client = new MongoClient(MongoDB_URL);
 
 client.connect()
   .then(() => {
-    const db = client.db('GiftLists');  //Database Name
+    const db = client.db('GiftLists');
     const giftList = db.collection('primary');
-    // makeGiftList() ?
 
     let PORT = process.env.PORT || 3000;
     server.listen(PORT);
@@ -73,19 +73,15 @@ client.connect()
       res.render('login.ejs')
     });
 
-    // GET/READ - render log in page
+    // GET/READ - render contact page
     server.get("/contact", (req, res) => {
       res.render('contact.ejs')
     });
     // GET/READ
     server.get("/userprofile", isLoggedIn, async (req, res) => {
-      console.log(req.user)
       // send proper data from Mongo
-      //add creator ID to find/filer unique entries {creator: req.user.id}
-      //get will only render the entries related to the specific creator
       const gifts = await giftList.find({ creator: req.user.id }).toArray()
       const name = req.user.name.givenName
-      //  res.send(findResult)
       res.render('profile.ejs', {
         gifts: gifts,
         name: name
@@ -95,8 +91,9 @@ client.connect()
 
     // POST/CREATE
     server.post('/userprofile', isLoggedIn, async (req, res) => {
-      // get data values from form: giftName, recipient, link, date
+      // get data values from form
       const { giftName, recipient, link, date } = req.body
+
       // VALIDATION: ensure all fields are valid
       if (
         giftName === undefined ||
@@ -120,42 +117,31 @@ client.connect()
         newGift.date = date;
       }
 
-      //new gift creator value req.user.id
+      // new gift creator value req.user.id
       newGift.creator = req.user.id
 
-      // push: add all data to new Gift card
       await giftList.insertOne(newGift)
 
       res.redirect(303, '/userprofile')
-      // res.redirect(req.originalUrl)
-      // const gifts = await giftList.find({creator: userProfile.id}).toArray()
-      // res.render('profile.ejs', {
-      //   gifts: gifts
-      // })
-      // response.redirect(request.get('referer'));
-
     })
 
 
     // PUT/UPDATE
     server.put('/userprofile', isLoggedIn, async (req, res) => {
 
-      // get edit data: _id, giftName, recipient, link, date
+      // get edit data
       const { _id, giftName, recipient, link, date } = req.body
 
       // validate required data
       if (_id === undefined) {
         return res.status(400).json({ message: "id is required" })
       }
-
       if (giftName === undefined || giftName.length === 0) {
         return res.status(400).json({ message: "Gift name can't be empty" });
       }
-
       if (recipient === undefined || recipient.length === 0) {
         return res.status(400).json({ message: "Recipient can't be empty" });
       }
-
       if (link === undefined || link.length === 0) {
         return res.status(400).json({ message: "Link can't be empty" });
       }
@@ -182,40 +168,24 @@ client.connect()
       const giftListID = req.params.id;
 
       // remove the request from the database
-      const deleteGift = await giftList.findOneAndDelete({ _id: ObjectId(giftListID) })
+      await giftList.findOneAndDelete({ _id: ObjectId(giftListID) })
 
       // redirect
       res.redirect(303, "/userprofile")
     })
 
 
-
-
-
-
     server.get('/', function (req, res) {
       res.render('pages/auth');
     });
 
-    
-
-
-
-    server.get('/success', (req, res) => res.send({ user: req.user }));
     server.get('/error', (req, res) => res.send("error logging in"));
-
-    
 
     server.get('/auth/google',
       passport.authenticate('google', { scope: ['profile', 'email'] }));
 
     server.get('/auth/google/callback',
       passport.authenticate('google', { failureRedirect: '/error', successRedirect: "/userprofile" }))
-    //function (req, res) {
-    // Successful authentication, redirect success.
-    //res.redirect('/success');
-    //   res.redirect('/userprofile');
-    // });
 
     server.get('/logout', function (req, res) {
       req.session.destroy(function (e) {
@@ -225,12 +195,12 @@ client.connect()
     });
 
     function isLoggedIn(req, res, next) {
-      
       if (req.isAuthenticated()) {
         next()
       }
       else {
-        res.redirect("/login.ejs") //re-direct to login page if false 
+        // re-direct to login page if false
+        res.redirect("/login.ejs")
       }
     }
   })
