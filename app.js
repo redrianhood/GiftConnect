@@ -146,7 +146,7 @@ client.connect()
 
       //assign new values
       const newGift = {
-        giftName, recipient, link, photo: await getUnsplashPhoto({ giftName })
+        giftName, recipient, link, photo: await getUnsplashPhoto(giftName)
       }
 
       if (date !== undefined) {
