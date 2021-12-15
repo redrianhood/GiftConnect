@@ -18,7 +18,6 @@ server.set('view engine', 'ejs');
 server.use(express.static(__dirname + '/public'))
 
 const { getUnsplashPhoto } = require("./public/javascripts/services");
-// const { application } = require('express');
 const MongoDB_URL = `mongodb+srv://${process.env.MDB_USER}:${process.env.MDB_PW}@cluster0.nhbd7.mongodb.net/Gift-List-Application?retryWrites=true&w=majority`;
 const client = new MongoClient(MongoDB_URL);
 
@@ -42,7 +41,6 @@ passport.deserializeUser(function (obj, cb) {
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  //callbackURL: "http://localhost:3000/auth/google/callback"
   callbackURL: "https://giftlist-sde-api.herokuapp.com/auth/google/callback",
   passReqToCallback: true
 },
