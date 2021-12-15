@@ -5,6 +5,11 @@ const fetch = require('node-fetch');
 const express = require('express');
 const cors = require('cors');
 
+//Passport 
+const session = require('express-session');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+
 const server = express();
 server.use(express.json());
 server.use(express.urlencoded({ extended: true }));
@@ -12,16 +17,47 @@ server.use(cors());
 server.set('view engine', 'ejs');
 server.use(express.static(__dirname + '/public'))
 
+//Passport 
+server.use(session({
+  resave: false,
+  saveUninitialized: true,
+  secret: 'SECRET'
+}));
+server.use(passport.initialize());
+server.use(passport.session());
+
+passport.serializeUser(function (user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function (obj, cb) {
+  cb(null, obj);
+});
+
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  //callbackURL: "https://giftlist-sde-api.herokuapp.com/auth/google/callback"
+  callbackURL: "http://localhost:3000/auth/google/callback",
+  passReqToCallback: true
+},
+  function (req, accessToken, refreshToken, profile, done) {
+    return done(null, profile);
+
+  }
+));
+
 const { getUnsplashPhoto } = require("./public/javascripts/services");
 const { application } = require('express');
 const MongoDB_URL = `mongodb+srv://${process.env.MDB_USER}:${process.env.MDB_PW}@cluster0.nhbd7.mongodb.net/Gift-List-Application?retryWrites=true&w=majority`;
-const client = new MongoClient(MongoDB_URL);
 
+const client = new MongoClient(MongoDB_URL);
 
 client.connect()
   .then(() => {
     const db = client.db('GiftLists');  //Database Name
     const giftList = db.collection('primary');
+    // makeGiftList() ?
 
     let PORT = process.env.PORT || 3000;
     server.listen(PORT);
@@ -37,16 +73,19 @@ client.connect()
       res.render('login.ejs')
     });
 
-    // GET/READ - render contact page
+    // GET/READ - render log in page
     server.get("/contact", (req, res) => {
       res.render('contact.ejs')
     });
-
-    // GET/READ - render userprofile page
+    // GET/READ
     server.get("/userprofile", isLoggedIn, async (req, res) => {
+      console.log(req.user)
       // send proper data from Mongo
-      const gifts = await giftList.find({ creator: userProfile.id }).toArray()
-      const name = userProfile.name.givenName
+      //add creator ID to find/filer unique entries {creator: req.user.id}
+      //get will only render the entries related to the specific creator
+      const gifts = await giftList.find({ creator: req.user.id }).toArray()
+      const name = req.user.name.givenName
+      //  res.send(findResult)
       res.render('profile.ejs', {
         gifts: gifts,
         name: name
@@ -56,8 +95,8 @@ client.connect()
 
     // POST/CREATE
     server.post('/userprofile', isLoggedIn, async (req, res) => {
+      // get data values from form: giftName, recipient, link, date
       const { giftName, recipient, link, date } = req.body
-
       // VALIDATION: ensure all fields are valid
       if (
         giftName === undefined ||
@@ -81,30 +120,42 @@ client.connect()
         newGift.date = date;
       }
 
-      // new gift creator value req.user.id
-      newGift.creator = userProfile.id
+      //new gift creator value req.user.id
+      newGift.creator = req.user.id
 
       // push: add all data to new Gift card
       await giftList.insertOne(newGift)
 
       res.redirect(303, '/userprofile')
+      // res.redirect(req.originalUrl)
+      // const gifts = await giftList.find({creator: userProfile.id}).toArray()
+      // res.render('profile.ejs', {
+      //   gifts: gifts
+      // })
+      // response.redirect(request.get('referer'));
+
     })
 
 
     // PUT/UPDATE
     server.put('/userprofile', isLoggedIn, async (req, res) => {
+
+      // get edit data: _id, giftName, recipient, link, date
       const { _id, giftName, recipient, link, date } = req.body
 
       // validate required data
       if (_id === undefined) {
         return res.status(400).json({ message: "id is required" })
       }
+
       if (giftName === undefined || giftName.length === 0) {
         return res.status(400).json({ message: "Gift name can't be empty" });
       }
+
       if (recipient === undefined || recipient.length === 0) {
         return res.status(400).json({ message: "Recipient can't be empty" });
       }
+
       if (link === undefined || link.length === 0) {
         return res.status(400).json({ message: "Link can't be empty" });
       }
@@ -125,72 +176,46 @@ client.connect()
       return res.json(newGift)
     })
 
-
     // DELETE
     server.delete('/userprofile/:id', isLoggedIn, async (req, res) => {
       // get id to be deleted
       const giftListID = req.params.id;
 
       // remove the request from the database
-      await giftList.findOneAndDelete({ _id: ObjectId(giftListID) })
+      const deleteGift = await giftList.findOneAndDelete({ _id: ObjectId(giftListID) })
 
       // redirect
       res.redirect(303, "/userprofile")
     })
 
 
-    //Passport 
-    const session = require('express-session');
-    const passport = require('passport');
-    const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-    server.set('view engine', 'ejs');
 
-    server.use(session({
-      resave: false,
-      saveUninitialized: true,
-      secret: 'SECRET'
-    }));
+
 
     server.get('/', function (req, res) {
       res.render('pages/auth');
     });
 
-    var userProfile;
+    
 
-    server.use(passport.initialize());
-    server.use(passport.session());
+
 
     server.get('/success', (req, res) => res.send({ user: req.user }));
     server.get('/error', (req, res) => res.send("error logging in"));
 
-    passport.serializeUser(function (user, cb) {
-      cb(null, user);
-    });
-
-    passport.deserializeUser(function (obj, cb) {
-      cb(null, obj);
-    });
-
-    passport.use(new GoogleStrategy({
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: 'https://giftlist-sde-api.herokuapp.com/auth/google/callback'
-    },
-      function (accessToken, refreshToken, profile, done) {
-        userProfile = profile;
-        return done(null, userProfile);
-      }
-    ));
+    
 
     server.get('/auth/google',
       passport.authenticate('google', { scope: ['profile', 'email'] }));
 
     server.get('/auth/google/callback',
-      passport.authenticate('google', { failureRedirect: '/error' }),
-      function (req, res) {
-        res.redirect('/userprofile');
-      });
+      passport.authenticate('google', { failureRedirect: '/error', successRedirect: "/userprofile" }))
+    //function (req, res) {
+    // Successful authentication, redirect success.
+    //res.redirect('/success');
+    //   res.redirect('/userprofile');
+    // });
 
     server.get('/logout', function (req, res) {
       req.session.destroy(function (e) {
@@ -200,12 +225,12 @@ client.connect()
     });
 
     function isLoggedIn(req, res, next) {
-      if (userProfile !== undefined) {
+      
+      if (req.isAuthenticated()) {
         next()
       }
       else {
-        // re-direct to login page if false
-        res.redirect("/login.ejs")  
+        res.redirect("/login.ejs") //re-direct to login page if false 
       }
     }
   })
