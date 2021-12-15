@@ -84,6 +84,7 @@ function editEntry(eventObj) {
   const recipientLoc = card.children[2].children[0];
   const linkLoc = card.children[3].children[0]; 
   const dateLoc = card.children[2].children[1].children[0]; 
+  const picLoc = card.children[1];
 
   fetch(PROFILE_URL, {
     method: 'PUT',
@@ -98,6 +99,7 @@ function editEntry(eventObj) {
     recipientLoc.innerText = 'For: ' + data.recipient;
     linkLoc.setAttribute('href', newLink);
     dateLoc.innerText = 'On: ' + data.date;
+    picLoc.src = data.photo;
   })
   .catch(error => console.log(error));
 }
