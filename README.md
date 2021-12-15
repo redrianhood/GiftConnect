@@ -17,7 +17,7 @@ GiftConnect is designed as a place to store the data you want for a gift list (a
 - [Developers](#developers)
 
 ## Process
-[(Back to top)](#table-of-contents)
+[(Back to top)](#giftconnect)
 
 Developed over the course of a week during the final portion of JavaScript with TLG Learning. 
 
@@ -28,7 +28,7 @@ Technologies:
 - EJS
 
 ## Developers
-[(Back to top)](#table-of-contents)
+[(Back to top)](#giftconnect)
 
 - Sheila Cartagena
 - Rian Boren
